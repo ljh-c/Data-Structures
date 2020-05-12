@@ -83,10 +83,11 @@ class DoublyLinkedList:
         if not self.head:
             self.head = ListNode(value)
             self.tail = self.head
-        
-        old_tail = self.tail
-        old_tail.insert_after(value)
-        self.tail = old_tail.next
+        else:
+            old_tail = self.tail
+            old_tail.insert_after(value)
+            self.tail = old_tail.next
+
         self.length += 1
 
     """Removes the List's current tail node, making the 
@@ -146,8 +147,21 @@ class DoublyLinkedList:
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
     def delete(self, node):
-        pass
-        
+        if self.head is self.tail:
+            self.head = None
+            self.tail = None
+            self.length -= 1
+        elif self.head is node:
+            self.remove_from_head()
+        elif self.tail is node:
+            self.remove_from_tail()
+        else:
+            node.prev.next = node.next
+            node.next.prev = node.prev
+            self.length -= 1
+
+        return node
+    
     """Returns the highest value currently in the list"""
     def get_max(self):
         pass
@@ -161,13 +175,18 @@ class DoublyLinkedList:
             print(current.value)
             current = current.next
 
-# dll = DoublyLinkedList(ListNode(1)) # 1
+dll = DoublyLinkedList(ListNode(1))
 
-# dll.add_to_head(40) # 40 1
-# dll.move_to_end(dll.head) # 1 40
-# dll.add_to_tail(4) # 1 40 4
-# dll.move_to_end(dll.head.next) # 1 4 40
-# dll.add_to_tail(500) # 1 4 40 500
-# dll.move_to_end(dll.head.next.next)
+dll.delete(dll.head)
+print(dll.length, "should 0")
 
+dll.add_to_tail(1)
+print(dll.length, "should 1")
+dll.add_to_tail(9)
+dll.add_to_tail(6)
+print(dll.length, "should 3")
+
+dll.delete(dll.tail)
+# print("elements below")
 # dll.print_elements()
+print(dll.length, "should 2")
