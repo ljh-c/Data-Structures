@@ -48,7 +48,7 @@ class DoublyLinkedList:
     as the new head of the list. Don't forget to handle 
     the old head node's previous pointer accordingly."""
     def add_to_head(self, value):
-        if not self.head:
+        if not self.head and not self.tail:
             self.head = ListNode(value)
             self.tail = self.head
         
@@ -123,18 +123,24 @@ class DoublyLinkedList:
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
     def move_to_end(self, node):
+        if self.tail is node:
+            return
+
         if self.head is not node:
             node.prev.next = node.next
 
-        if self.tail is not node:
-            node.next.prev = node.prev
-        
         if self.head:
-            old_tail = self.tail
-            # old tail needs to point to new tail?
+            node.next.prev = node.prev
+
+            if self.head is node:
+                self.head = node.next
+
+            if self.tail is node.next:
+                node.next.next = node
+
             node.prev = self.tail
-            print(self.tail.value)
             node.next = None
+            self.tail.next = node
             self.tail = node
 
     """Removes a node from the list and handles cases where
@@ -146,10 +152,22 @@ class DoublyLinkedList:
     def get_max(self):
         pass
 
-dll = DoublyLinkedList(ListNode(1))
+    """Print out each value in linked list"""
 
-# dll.add_to_head(40)
-# dll.move_to_end(dll.head)
-# dll.add_to_tail(4)
-# dll.move_to_end(dll.head.next)
-# print("expect tail.value to be 40", dll.tail.value)
+    def print_elements(self):
+        current = self.head
+
+        while current is not None:
+            print(current.value)
+            current = current.next
+
+# dll = DoublyLinkedList(ListNode(1)) # 1
+
+# dll.add_to_head(40) # 40 1
+# dll.move_to_end(dll.head) # 1 40
+# dll.add_to_tail(4) # 1 40 4
+# dll.move_to_end(dll.head.next) # 1 4 40
+# dll.add_to_tail(500) # 1 4 40 500
+# dll.move_to_end(dll.head.next.next)
+
+# dll.print_elements()
