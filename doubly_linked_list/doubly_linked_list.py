@@ -103,6 +103,8 @@ class DoublyLinkedList:
         # if linked list had 1 node
         if not self.tail:
             self.head = None
+        else:
+            self.tail.next = None
 
         self.length -= 1
         return value
@@ -164,7 +166,21 @@ class DoublyLinkedList:
     
     """Returns the highest value currently in the list"""
     def get_max(self):
-        pass
+        current = self.head
+
+        if current is None:
+            return None
+        elif current.next is None:
+            return current.value
+        else:
+            max = current.value
+
+            while current is not None:
+                if max < current.value:
+                    max = current.value
+                current = current.next
+        
+            return max
 
     """Print out each value in linked list"""
 
@@ -175,18 +191,15 @@ class DoublyLinkedList:
             print(current.value)
             current = current.next
 
-dll = DoublyLinkedList(ListNode(1))
+# dll = DoublyLinkedList(ListNode(1))
 
-dll.delete(dll.head)
-print(dll.length, "should 0")
+# dll.delete(dll.head)
 
-dll.add_to_tail(1)
-print(dll.length, "should 1")
-dll.add_to_tail(9)
-dll.add_to_tail(6)
-print(dll.length, "should 3")
+# dll.add_to_tail(1)
+# dll.add_to_tail(9)
+# dll.add_to_tail(6)
+# dll.add_to_tail(7)
 
-dll.delete(dll.tail)
-# print("elements below")
+# dll.remove_from_tail()
 # dll.print_elements()
-print(dll.length, "should 2")
+# dll.move_to_end(dll.head.next)

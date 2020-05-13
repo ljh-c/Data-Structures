@@ -71,3 +71,20 @@ class LinkedList:
             current = current.get_next()
         
         return max
+    
+    def add_to_head(self, value):
+        new_node = Node(value)
+
+        if not self.head and not self.tail:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.set_next(self.head)
+            self.head = new_node
+    
+    def print_ll_elements(self):
+        current = self.head
+
+        while current is not None:
+            print(current.value)
+            current = current.get_next()

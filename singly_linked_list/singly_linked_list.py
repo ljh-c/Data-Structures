@@ -19,16 +19,17 @@ class LinkedList:
         self.head = None
         self.tail = None
     
+    # with access to the tail, we can directly add nodes to it
+    # O(1)
     def add_to_tail(self, value):
         new_node = Node(value)
 
         # if the linked list is empty
-        if not self.head:
+        if not self.head and not self.tail:
             self.head = new_node
             self.tail = new_node
         else:
-            current_tail = self.tail
-            current_tail.set_next(new_node)
+            self.tail.set_next(new_node)
             self.tail = new_node
 
     def remove_head(self):
