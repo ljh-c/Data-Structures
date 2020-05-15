@@ -19,17 +19,16 @@ class LinkedList:
         self.head = None
         self.tail = None
     
-    # with access to the tail, we can directly add nodes to it
-    # O(1)
     def add_to_tail(self, value):
         new_node = Node(value)
 
         # if the linked list is empty
-        if not self.head and not self.tail:
+        if not self.head:
             self.head = new_node
             self.tail = new_node
         else:
-            self.tail.set_next(new_node)
+            current_tail = self.tail
+            current_tail.set_next(new_node)
             self.tail = new_node
 
     def remove_head(self):
@@ -72,3 +71,20 @@ class LinkedList:
             current = current.get_next()
         
         return max
+    
+    def add_to_head(self, value):
+        new_node = Node(value)
+
+        if not self.head and not self.tail:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.set_next(self.head)
+            self.head = new_node
+    
+    def print_ll_elements(self):
+        current = self.head
+
+        while current is not None:
+            print(current.value)
+            current = current.get_next()
